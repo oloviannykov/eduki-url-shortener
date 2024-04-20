@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShortUrl;
-//use Illuminate\Routing\Redirector;
 use Illuminate\Http\RedirectResponse;
 
 /**
@@ -21,7 +20,7 @@ class UrlShortenerController extends Controller
     {
         $url = ShortUrl::getUrlByHash($id);
         if ($url === null) {
-            return redirect()->route('web.home', [
+            return redirect()->route('home', [
                 'error' => 'The URL ID was not found'
             ]);
         }

@@ -31,16 +31,16 @@ class ShortUrlTest extends TestCase
         $this->assertTrue(strlen($hash) <= 20, "result is too long: $hash");
     }
 
-    #[TestWith(['', ShortUrl::ERROR_TOO_SHORT])]
-    #[TestWith(['  ', ShortUrl::ERROR_TOO_SHORT])]
-    #[TestWith(["\t\n", ShortUrl::ERROR_TOO_SHORT])]
+    #[TestWith(['', ShortUrl::ERROR_WRONG_FORMAT])]
+    #[TestWith(['  ', ShortUrl::ERROR_WRONG_FORMAT])]
+    #[TestWith(["\t\n", ShortUrl::ERROR_WRONG_FORMAT])]
     #[TestWith(["http://g.com/abc", ShortUrl::ERROR_TOO_SHORT])]
-    #[TestWith(['qwerty@example.com', ShortUrl::ERROR_TOO_SHORT])]
-    #[TestWith(['qwerty12345678-jhgjjhhhjg@example.com', ShortUrl::ERROR_EMAIL_FORMAT_NOT_ALLOWED])]
+    #[TestWith(['qwerty@example.com', ShortUrl::ERROR_WRONG_FORMAT])]
+    #[TestWith(['qwerty12345678-jhgjjhhhjg@example.com', ShortUrl::ERROR_WRONG_FORMAT])]
     #[TestWith(['ftp://library.com/qwerty12345678.pdf', ShortUrl::ERROR_WRONG_PROTOCOL])]
-    #[TestWith(['ftp://user:pass@library.com/qwerty.pdf', ShortUrl::ERROR_EMAIL_FORMAT_NOT_ALLOWED])]
-    #[TestWith(['//library.com/qwerty.pdf', ShortUrl::ERROR_WRONG_PROTOCOL])]
-    #[TestWith(['http://../qwerty/asdf/1234567890asdf', ShortUrl::ERROR_WRONG_HOST_NAME])]
+    #[TestWith(['ftp://user:pass@library.com/qwerty.pdf', ShortUrl::ERROR_WRONG_PROTOCOL])]
+    #[TestWith(['//library.com/qwerty.pdf', ShortUrl::ERROR_WRONG_FORMAT])]
+    #[TestWith(['http://../qwerty/asdf/1234567890asdf', ShortUrl::ERROR_WRONG_FORMAT])]
     public function testValidateUrlReturnsErrorCode(string $value, string $matchErrCode): void
     {
         $errorCode = ShortUrl::validateUrl($value);

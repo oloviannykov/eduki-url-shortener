@@ -33,7 +33,6 @@ div.panel div.panel-body {
 
 #url-shortener-form label input {
     display: block;
-    width: 95%;
     border: 1px solid black;
     margin-top: 20px;
 }
@@ -48,4 +47,21 @@ div.urls-list-item {
     margin-bottom: 10px;
     padding: 5px;
     font-size: 14px;
+}
+
+div.urls-list-item p.list-item-url {
+    font-weight: bold;
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis */
+}
+
+#url-shortener-list {
+    min-height: 100px;
+}
+
+.list-preloader {
+    font-size: 30px;
+    color:skyblue;
+    font-weight: bold;
 }

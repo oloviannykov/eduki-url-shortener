@@ -67,8 +67,7 @@ class UrlShortenerController extends Controller
                 ShortUrl::ERROR_TOO_SHORT => 'URL is too short',
                 ShortUrl::ERROR_TOO_LONG => 'URL is too long',
                 ShortUrl::ERROR_WRONG_PROTOCOL => 'URL has wrong protocol. Allowed only http or https',
-                ShortUrl::ERROR_WRONG_HOST_NAME => 'URL has no server name',
-                ShortUrl::ERROR_EMAIL_FORMAT_NOT_ALLOWED => '@ is not allowed',
+                ShortUrl::ERROR_WRONG_FORMAT => 'URL has wrong format',
             ];
             $errorMessage = $messages[$errorCode] ?? 'internal server error';
             return [

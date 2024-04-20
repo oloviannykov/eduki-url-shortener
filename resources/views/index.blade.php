@@ -24,7 +24,7 @@
 
         <button class="btn btn-primary" id="url-shortener-form-button">Go</button>
 
-        <div id="url-shortener-form-warning"></div>
+        <div id="url-shortener-form-result"></div>
 
     </div>
 </div>
