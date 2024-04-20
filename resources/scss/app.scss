@@ -1,0 +1,51 @@
+@import "~bootstrap/scss/bootstrap";
+
+div.panel {
+    border: 1px solid darkblue;
+    border-radius: 6px;
+    margin-top: 15px;
+    min-width: 500px;
+}
+
+div.panel div.panel-heading {
+    font-size: 16px;
+    font-weight: bold;
+    background-color:darkblue;
+    color: white;
+    padding: 3px;
+    min-height: 35px;
+    overflow: hidden;
+}
+
+div.panel div.panel-body {
+    padding: 5px;
+}
+
+#url-shortener-form {
+    text-align: center;
+}
+
+#url-shortener-form label {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+#url-shortener-form label input {
+    display: block;
+    width: 95%;
+    border: 1px solid black;
+    margin-top: 20px;
+}
+
+#url-shortener-form button {
+    margin: 20px;
+    width: 200px;
+    font-weight: bold;
+}
+
+div.urls-list-item {
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 14px;
+}

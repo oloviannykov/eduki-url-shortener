@@ -23,8 +23,9 @@ class ShortUrl extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    const ERROR_TOO_SHORT = 'url_is_too_short';
-    const ERROR_TOO_LONG = 'url_is_too_long';
+    const ERROR_NOT_FOUND = 'record_not_found';
+    const ERROR_TOO_SHORT = 'value_is_too_short';
+    const ERROR_TOO_LONG = 'value_is_too_long';
     const ERROR_WRONG_PROTOCOL = 'wrong_url_protocol';
     const ERROR_WRONG_HOST_NAME = 'wrong_url_host_name';
     const ERROR_EMAIL_FORMAT_NOT_ALLOWED = 'email_format_is_not_allowed';
@@ -102,20 +103,19 @@ class ShortUrl extends Model
         return $result;
     }
 
-    public static function createShortUrl(string $url): string
+    public static function createShortUrl(string $url): self
     {
         //validation was done in controller
         $id = self::getHash($url);
         $record = ShortUrl::find($id);
         if ($record) {
-            return $record->getShortUrl();
+            return $record;
         }
         $record = new ShortUrl();
         $record->id = $id;
         $record->original_url = $url;
         $record->save();
-
-        return $record->getShortUrl();
+        return $record;
     }
 
     public function getShortUrl(): string

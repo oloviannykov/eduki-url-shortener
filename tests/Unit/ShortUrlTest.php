@@ -61,24 +61,31 @@ class ShortUrlTest extends TestCase
     {
         $urlParam = 'http://g.com/?a=123&ts=' . time();
 
-        $shortUrl = ShortUrl::createShortUrl($urlParam);
-        $this->assertNotEmpty($shortUrl, "first createShortUrl result is empty");
-        $this->assertTrue(strlen($shortUrl) > 20, "result is too short: $shortUrl");
-        $this->assertTrue(strlen($shortUrl) < 50, "result is too long: $shortUrl");
-        $hash = array_reverse(explode('/', $shortUrl))[0];
-        $this->assertNotEmpty($hash, "hash is empty");
+        $record = ShortUrl::createShortUrl($urlParam);
+        $this->assertNotEmpty($record, "first createShortUrl result is empty");
+        $id = $record->id;
+        $this->assertTrue(strlen($id) >= 10, "id is too short: $id");
+        $this->assertTrue(strlen($id) <= 20, "id is too long: $id");
+        $shortUrl = $record->getShortUrl();
+        $this->assertTrue(strlen($shortUrl) > 20, "URL is too short: $shortUrl");
+        $this->assertTrue(strlen($shortUrl) < 50, "URL is too long: $shortUrl");
 
-        $urlResult = ShortUrl::getUrlByHash($hash);
+        $urlResult = ShortUrl::getUrlByHash($id);
         $this->assertNotEmpty($urlResult, "getUrlByHash result is empty");
         $this->assertEquals($urlParam, $urlResult);
 
-        $shortUrl2 = ShortUrl::createShortUrl($urlParam);
-        $this->assertNotEmpty($shortUrl2, "second createShortUrl result is empty");
-        $this->assertEquals($shortUrl, $shortUrl2, "short URL should be same for same full URL");
+        $record = ShortUrl::createShortUrl($urlParam);
+        $this->assertNotEmpty($record, "first createShortUrl result is empty");
+        $id = $record->id;
+        $this->assertTrue(strlen($id) >= 10, "id is too short: $id");
+        $this->assertTrue(strlen($id) <= 20, "id is too long: $id");
+        $shortUrl2 = $record->getShortUrl();
+        $this->assertNotEmpty($shortUrl2, "second short URL is empty");
+        $this->assertEquals($shortUrl, $shortUrl2, "second short URL should equal to the first");
 
-        ShortUrl::find($hash)?->delete();
-        $urlResult = ShortUrl::getUrlByHash($hash);
-        $this->assertEmpty($urlResult, "getUrlByHash result should be empty after removing hash");
+        ShortUrl::find($id)?->delete();
+        $urlResult = ShortUrl::getUrlByHash($id);
+        $this->assertEmpty($urlResult, "getUrlByHash result should be empty after removing record");
     }
 
     #[TestWith([''])]

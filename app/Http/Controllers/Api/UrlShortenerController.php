@@ -25,17 +25,13 @@ class UrlShortenerController extends Controller
      */
     public function index(Request $request): array
     {
-        $startDate = date('Y-m-d', strtotime('-1 week'));
+        $startDate = date('Y-m-d', strtotime('-1 month'));
         /** @var Collection|ShortUrl[] $items */
         $items = ShortUrl::where('created_at', '>', $startDate)
             ->orderByDesc('created_at')
-            ->limit(30)
+            ->take(30) //equivalent of limit(30), get last 30 records
             ->get();
 
-        if ($items->isEmpty()) {
-            return [];
-        }
-        
         $result = [];
         /** @var ShortUrl $item */
         foreach ($items as $item) {
@@ -43,13 +39,16 @@ class UrlShortenerController extends Controller
                 'id' => $item->id,
                 'short_url' => $item->getShortUrl(),
                 'original_url' => $item->original_url,
-                'created_at' => $item->created_at, //date('Y-m-d', ..) ??
+                'created_at' => date('Y-m-d', strtotime($item->created_at)),
                 'usage_counter' => $item->usage_counter,
-                'last_usage_date' => $item->updated_at, //date('Y-m-d', ..) ??
+                'last_usage_date' => date('Y-m-d', strtotime($item->updated_at)),
             ];
         }
 
-        return $result;
+        return [
+            'success' => true,
+            'items' => $result,
+        ];
     }
 
     /**
@@ -80,9 +79,52 @@ class UrlShortenerController extends Controller
             ];
         }
 
+        $record = ShortUrl::createShortUrl($url);
         return [
             'success' => true,
-            'url' => ShortUrl::createShortUrl($url),
+            'id' => $record->id,
+            'url' => $record->getShortUrl(),
+        ];
+    }
+
+    /**
+     * Get full URL by ID (URL hash)
+     *
+     * @param Request $request The HTTP request instance.
+     * @param string $id URL hash to remove
+     * @return array<string, mixed> The result of the save operation.
+     */
+    public function getUrlById(Request $request, string $id): array
+    {
+        $errorCode = ShortUrl::validateId($id);
+        if ($errorCode) {
+            $messages = [
+                ShortUrl::ERROR_TOO_SHORT => 'ID is too short',
+                ShortUrl::ERROR_TOO_LONG => 'ID is too long',
+            ];
+            $errorMessage = $messages[$errorCode] ?? 'internal server error';
+            return [
+                'error' => [
+                    'code' => $errorCode,
+                    'message' => $errorMessage,
+                ],
+            ];
+        }
+
+        $url = ShortUrl::getUrlByHash($id);
+
+        if ($url === null) {
+            return [
+                'error' => [
+                    'code' => ShortUrl::ERROR_NOT_FOUND,
+                    'message' => 'Record not found',
+                ],
+            ];
+        }
+
+        return [
+            'success' => true,
+            'url' => $url,
         ];
     }
 

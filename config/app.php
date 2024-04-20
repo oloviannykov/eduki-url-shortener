@@ -1,5 +1,14 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\AuthServiceProvider;
+use App\Providers\EventServiceProvider;
+use App\Providers\FaceRecognitionProvider;
+use App\Providers\HorizonServiceProvider;
+use App\Providers\ImageProcessingProvider;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -123,4 +132,27 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Autoloaded Service Providers
+    |--------------------------------------------------------------------------
+    |
+    | The service providers listed here will be automatically loaded on the
+    | request to your application. Feel free to add your own services to
+    | this array to grant expanded functionality to your applications.
+    |
+    */
+
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        /*
+         * Package Service Providers...
+         */
+
+        /*
+         * Application Service Providers...
+         */
+        AppServiceProvider::class,
+        RouteServiceProvider::class,
+    ])->toArray(),
 ];
