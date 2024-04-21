@@ -40,7 +40,7 @@ class UrlShortenerTest extends TestCase
             fn(AssertableJson $json) =>
             $json->where('success', true)->whereType('items', 'array')->missing("error")->etc()
         );
-        
+
         $r = $response->json();
         //$this->assertTrue(count($r['items']) > 0, "items count should be > 0");
 

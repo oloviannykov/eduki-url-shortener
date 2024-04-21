@@ -95,8 +95,8 @@ class ShortUrl extends Model
         $result = '';
         for ($i = 0; $i < 32; $i += 2) {
             $v1 = $char2number[$hex[$i]];
-            $v2 = $char2number[$hex[$i+1]];
-            $sum = $v1*2 + $v2;
+            $v2 = $char2number[$hex[$i + 1]];
+            $sum = $v1 * 2 + $v2;
             $result .= $number2char[$sum];
         }
         return $result;
