@@ -14,7 +14,9 @@ $(document).ready(function () {
         return '<div class="urls-list-item">'
             + `<p class="list-item-url">${itemData.original_url}</p>`
             + '<p>Short URL: '
-                + `<a href="${itemData.short_url}" target="_blank">${itemData.short_url}</a>`
+                + `<a href="${itemData.short_url}" target="_blank" class="item-short-url">`
+                + itemData.short_url
+                + `</a>`
             + '</p>'
             + '<p>'
                 + `Created ${itemData.created_at}.`
@@ -61,6 +63,7 @@ $(document).ready(function () {
                     });
                 }
                 $('#url-shortener-list').html(listHtml);
+                $('a.item-short-url').on('click', () => setTimeout(refreshItemsList, 2000));
             });
         })
         .catch((error) => {

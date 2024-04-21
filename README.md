@@ -49,11 +49,20 @@ cd eduki-url-shortener
 
 2. Create MySQL database. Instructions [here](https://www.mysqltutorial.org/mysql-basics/mysql-create-database/)
 
-3. Copy .env.example file to .env:
+3. Set environment variables
+
+- Copy .env.example file to .env.
+On Linux you can just use the command:
 ```shell
 cp .env.example .env
 ```
-Set the MySQL connection in the file:
+
+- *(optional)* Set your time zone from [supported by PHP](https://www.php.net/manual/en/timezones.php):
+```
+APP_TIMEZONE=(time zone code here)
+```
+
+- Set the MySQL connection in the file:
 ```
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -62,11 +71,21 @@ DB_USERNAME=(DB user name here)
 DB_PASSWORD=(DB password here)
 ```
 
+- *(optional)* Generate a new application key:
+```shell
+php artisan key:generate
+```
+This command sets the APP_KEY value in your .env file.
+It can't be empty or random.
+
+- *(optional)* Create .env.testing and set connection for testing database.
+If database is same the file is not required.
+
 4. Install PHP dependancies via Composer:
 ```shell
 composer install
 ```
-or using composer.phar
+or using composer.phar included to the project
 ```shell
 php composer.phar install
 ```
@@ -89,6 +108,7 @@ npm run build
 ## Test from CLI
 
 You can run all test at once or run each group separately.
+If you want to use separate database for testing create .env.testing as explained above.
 
 ### Run all tests
 ```shell
@@ -114,7 +134,8 @@ php artisan test --testsuite=Feature --stop-on-failure
 php artisan serve
 ```
 
-2. Open the link in web-browser. You should see the form for adding URL.
+2. Open the [http://127.0.0.1:8000](http://127.0.0.1:8000) in web-browser.
+You should see the form for adding URL.
 
 3. Insert for example "https://laravel.com/docs/10.x/controllers#singleton-resource-controllers".
 Press button "Go". You should see the short link in message below and see other links in 'Recent URLs'.
@@ -122,6 +143,7 @@ Press button "Go". You should see the short link in message below and see other 
 4. You should see "Last result: (short link here)" and new record in "Recently added links"
 
 5. You can click on the link to try it - new tab will be opened with redirect to full URL.
+Just after redirecting the items list will be refreshed to show new usage counter.
 
 6. After using the link you should notice that link usage counter was incremented.
 
@@ -132,6 +154,7 @@ Press button "Go". You should see the short link in message below and see other 
 - language translations
 - pagination for items list
 - animated list preloader and icons
+- update only usage counter when short link is clicked
 
 ## Todo
 ### Add API documentation here

@@ -1,5 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
 
+html {
+    max-width: 1024px;
+    padding-bottom: 15px;
+    margin: auto;
+}
 div.panel {
     border: 1px solid darkblue;
     border-radius: 6px;
