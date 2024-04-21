@@ -41,15 +41,17 @@ To build and run this project on your computer you need:
 
 ## Setting up developer environment
 
-1. Goto directory where you want to store source code and clone the repository:
+### Clone repository
+Goto directory where you want to store source code and clone the repository:
 ```shell
 git clone https://github.com/oloviannykov/eduki-url-shortener.git
 cd eduki-url-shortener
 ```
 
-2. Create MySQL database. Instructions [here](https://www.mysqltutorial.org/mysql-basics/mysql-create-database/)
+### Create MySQL database
+Instructions [here](https://www.mysqltutorial.org/mysql-basics/mysql-create-database/)
 
-3. Set environment variables
+### Set environment variables
 
 - Copy .env.example file to .env.
 On Linux you can just use the command:
@@ -81,7 +83,8 @@ It can't be empty or random.
 - *(optional)* Create .env.testing and set connection for testing database.
 If database is same the file is not required.
 
-4. Install PHP dependancies via Composer:
+### Install dependancies
+- for PHP via global Composer:
 ```shell
 composer install
 ```
@@ -90,17 +93,17 @@ or using composer.phar included to the project
 php composer.phar install
 ```
 
-5. Install Node.js dependancies via NPM:
+- for Node.js via NPM:
 ```shell
 npm install
 ```
 
-6. Run Laravel migrations:
+### Run Laravel migrations:
 ```shell
 php artisan migrate
 ```
 
-7. Build Front-End:
+### Build Front-End:
 ```shell
 npm run build
 ```
