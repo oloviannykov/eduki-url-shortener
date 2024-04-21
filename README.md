@@ -43,12 +43,17 @@ To build and run this project on your computer you need:
 
 1. Goto directory where you want to store source code and clone the repository:
 ```shell
-git clone https://github.com/oloviannykov/eduki-url-shortener
+git clone https://github.com/oloviannykov/eduki-url-shortener.git
+cd eduki-url-shortener
 ```
 
 2. Create MySQL database. Instructions [here](https://www.mysqltutorial.org/mysql-basics/mysql-create-database/)
 
-3. Copy **/.env.example** file to **/.env**. Set the MySQL connection in the file:
+3. Copy .env.example file to .env:
+```shell
+cp .env.example .env
+```
+Set the MySQL connection in the file:
 ```
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -83,6 +88,24 @@ npm run build
 
 ## Test from CLI
 
+You can run all test at once or run each group separately.
+
+### Run all tests
+```shell
+php artisan test --stop-on-failure 
+```
+
+### Run only unit tests
+It is testing models and database
+```shell
+php artisan test --testsuite=Unit --stop-on-failure 
+```
+
+### Run only integration tests
+It is testing API endponts
+```shell
+php artisan test --testsuite=Feature --stop-on-failure 
+```
 
 ## Test from web-browser
 
@@ -95,3 +118,20 @@ php artisan serve
 
 3. Insert for example "https://laravel.com/docs/10.x/controllers#singleton-resource-controllers".
 Press button "Go". You should see the short link in message below and see other links in 'Recent URLs'.
+
+4. You should see "Last result: (short link here)" and new record in "Recently added links"
+
+5. You can click on the link to try it - new tab will be opened with redirect to full URL.
+
+6. After using the link you should notice that link usage counter was incremented.
+
+## What can be improved or added
+
+- hashing function algorithm,
+- "Remove" button on records list items, request API to remove record when the button is clicked,
+- language translations
+- pagination for items list
+- animated list preloader and icons
+
+## Todo
+### Add API documentation here
